@@ -1,0 +1,24 @@
+{
+  "PENDIENTE": {
+    "$allContainers": {
+      "enabled": true
+    },
+    "$allFields": {
+      "enabled": true
+    }
+  },
+  "EGRESADA": {
+    "$allContainers": {
+      "enabled": false
+    },
+    "$allFields": {
+      "enabled": false,
+      "required": false
+    },
+    "fields": {
+      "observaciones": {
+        "enabled": true
+      }
+    }
+  }
+}

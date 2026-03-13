@@ -32,7 +32,7 @@
     "dataType": "string",
     "label": "Tipo documento",
     "defaultValue": null,
-    "allowEmpty": false,
+    "allowEmpty": true,
     "ui": {
       "component": "Select"
     }

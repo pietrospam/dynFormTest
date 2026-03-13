@@ -1,12 +1,25 @@
 {
   "tipoDocumento": {
     "source": "static",
-    "allowEmptyOption": true,
+    "allowEmptyOption": false,
     "emptyOptionLabel": "-- seleccionar --",
     "items": [
-      { "value": "DNI", "label": "DNI" },
-      { "value": "CUIT", "label": "CUIT" },
-      { "value": "PASAPORTE", "label": "Pasaporte" }
+      {
+        "value": "DNI",
+        "label": "DNI"
+      },
+      {
+        "value": "CUIT",
+        "label": "CUIT"
+      },
+      {
+        "value": "PASAPORTE",
+        "label": "Pasaporte"
+      },
+      {
+        "value": "CEDULA",
+        "label": "Cédua de identidad"
+      }
     ]
   }
 }
