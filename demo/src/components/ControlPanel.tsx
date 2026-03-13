@@ -1,4 +1,5 @@
-import { Card, Button } from './ui'
+import { useState } from 'react'
+import { Card, Button, TextInput } from './ui'
 import { operationTypes, operationStatuses } from '../config'
 import type { FormContext } from '../../../src/types/engine.types'
 
@@ -7,6 +8,8 @@ interface ControlPanelProps {
   onContextChange: (context: FormContext) => void
   onValidate: () => void
   onReset: () => void
+  screenOptions: Array<{ value: string; label: string }>
+  onCreateScreen?: (screenId: string) => void
 }
 
 export function ControlPanel({
@@ -14,10 +17,58 @@ export function ControlPanel({
   onContextChange,
   onValidate,
   onReset,
+  screenOptions,
+  onCreateScreen,
 }: ControlPanelProps) {
+  const [newScreenId, setNewScreenId] = useState('')
+
   return (
     <Card title="Panel de Control">
       <div className="space-y-4">
+        {/* Screen */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Pantalla / contexto
+          </label>
+          <select
+            value={context.screenId}
+            onChange={(e) =>
+              onContextChange({ ...context, screenId: e.target.value })
+            }
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {screenOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+
+          {onCreateScreen ? (
+            <div className="mt-2 flex flex-wrap gap-2 items-end">
+              <div className="flex-1">
+                <TextInput
+                  label="Nueva pantalla"
+                  value={newScreenId}
+                  onChange={setNewScreenId}
+                  placeholder="ej: pantallaC"
+                />
+              </div>
+              <Button
+                onClick={() => {
+                  if (!newScreenId.trim()) return
+                  onCreateScreen(newScreenId.trim())
+                  setNewScreenId('')
+                }}
+                disabled={!newScreenId.trim()}
+                className="whitespace-nowrap"
+              >
+                Crear
+              </Button>
+            </div>
+          ) : null}
+        </div>
+
         {/* Operation Type */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">

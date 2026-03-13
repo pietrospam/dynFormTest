@@ -25,6 +25,13 @@ Luego abrí http://localhost:5174
 - Agregar nuevos editores visuales en `src/components/config/ConfigEditor.tsx`.
 - Agregar nuevos archivos de configuración en `src/config/`.
 
+### Notas sobre contextos y pantallas (screenId)
+
+El editor carga el config base y permite trabajar con cualquier campo/contendor/regla.
+Si tu aplicación usa pantallas distintas (ej. diferentes flujos o módulos), podés usar la clave `screenId` en el contexto para resolver configuraciones específicas (override de contenedores, campos, reglas, etc.).
+
+Ver `docs/config-editor-spec.md` para más detalles.
+
 ---
 
 ## Documentación

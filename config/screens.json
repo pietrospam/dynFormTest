@@ -1,0 +1,16 @@
+{
+  "default": {},
+  "pantallaA": {
+    "containers": {
+      "datosTransportista": { "visible": false }
+    }
+  },
+  "pantallaB": {
+    "containers": {
+      "datosTransportista": { "visible": true }
+    },
+    "fieldDefinitions": {
+      "nombreTransportista": { "label": "Nombre del transportista (pantalla B)" }
+    }
+  }
+}

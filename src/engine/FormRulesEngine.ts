@@ -21,6 +21,23 @@ export class FormRulesEngine {
   private config: FormConfig | null = null
 
   /**
+   * Returns the configuration merged with a screen-specific override (if any).
+   * Screen overrides are defined under `config.screens[screenId]`.
+   */
+  private getConfigForContext(context: FormContext): FormConfig {
+    this.ensureLoaded()
+
+    const base = this.config!
+    const screenId = context.screenId as string | undefined
+    if (!screenId) return base
+
+    const screenOverride = base.screens?.[screenId]
+    if (!screenOverride) return base
+
+    return mergeFormConfig(base, screenOverride)
+  }
+
+  /**
    * Loads and validates the configuration.
    * @throws Error if configuration is invalid
    */
@@ -40,12 +57,12 @@ export class FormRulesEngine {
    * Returns null if container doesn't exist or its container is not visible.
    */
   getContainerDefinition(
-    containerName: string, 
-    context: FormContext, 
+    containerName: string,
+    context: FormContext,
     _formData?: FormData
   ): ResolvedContainer | null {
-    this.ensureLoaded()
-    return resolveContainer(containerName, this.config!, context)
+    const config = this.getConfigForContext(context)
+    return resolveContainer(containerName, config, context)
   }
 
   /**
@@ -53,25 +70,25 @@ export class FormRulesEngine {
    * Returns null if field doesn't exist or its container is not visible.
    */
   getFieldDefinition(
-    fieldName: string, 
-    context: FormContext, 
+    fieldName: string,
+    context: FormContext,
     _formData?: FormData
   ): ResolvedField | null {
-    this.ensureLoaded()
-    return resolveField(fieldName, this.config!, context)
+    const config = this.getConfigForContext(context)
+    return resolveField(fieldName, config, context)
   }
 
   /**
    * Resolves the entire form definition grouped by containers.
    */
   getFormDefinition(
-    context: FormContext, 
+    context: FormContext,
     _formData?: FormData
   ): ResolvedFormDefinition {
-    this.ensureLoaded()
-    
-    const containers = resolveAllContainers(this.config!, context)
-    const fields = resolveAllFields(this.config!, context, containers)
+    const config = this.getConfigForContext(context)
+
+    const containers = resolveAllContainers(config, context)
+    const fields = resolveAllFields(config, context, containers)
     
     // Group fields by container
     const result: ResolvedFormDefinition = { containers: {} }
@@ -103,9 +120,10 @@ export class FormRulesEngine {
   getInitialValues(context: FormContext): InitialValues {
     this.ensureLoaded()
     
+    const config = this.getConfigForContext(context)
     const initialValues: InitialValues = {}
-    const containers = resolveAllContainers(this.config!, context)
-    const fields = resolveAllFields(this.config!, context, containers)
+    const containers = resolveAllContainers(config, context)
+    const fields = resolveAllFields(config, context, containers)
     
     for (const [_fieldName, field] of Object.entries(fields)) {
       if (field.visible) {
@@ -120,24 +138,24 @@ export class FormRulesEngine {
    * Validates a single field.
    */
   validateField(
-    fieldName: string, 
-    value: unknown, 
-    context: FormContext, 
+    fieldName: string,
+    value: unknown,
+    context: FormContext,
     formData?: FormData
   ): FieldValidationResult {
-    this.ensureLoaded()
-    return validateFieldValue(fieldName, value, this.config!, context, formData)
+    const config = this.getConfigForContext(context)
+    return validateFieldValue(fieldName, value, config, context, formData)
   }
 
   /**
    * Validates the entire form.
    */
   validateForm(
-    formData: FormData, 
+    formData: FormData,
     context: FormContext
   ): FormValidationResult {
-    this.ensureLoaded()
-    return validateFormData(formData, this.config!, context)
+    const config = this.getConfigForContext(context)
+    return validateFormData(formData, config, context)
   }
 
   /**
@@ -147,5 +165,26 @@ export class FormRulesEngine {
     if (!this.config) {
       throw new Error('Configuration not loaded. Call load() first.')
     }
+  }
+}
+
+function mergeFormConfig(base: FormConfig, override: Partial<FormConfig>): FormConfig {
+  return {
+    ...base,
+    ...override,
+    containers: { ...base.containers, ...(override.containers ?? {}) },
+    fieldDefinitions: { ...base.fieldDefinitions, ...(override.fieldDefinitions ?? {}) },
+    fieldOptions: { ...base.fieldOptions, ...(override.fieldOptions ?? {}) },
+    validationRules: { ...base.validationRules, ...(override.validationRules ?? {}) },
+    errorCatalog: { ...base.errorCatalog, ...(override.errorCatalog ?? {}) },
+    operationTypeRules: {
+      ...base.operationTypeRules,
+      ...(override.operationTypeRules ?? {}),
+    },
+    operationStatusRules: {
+      ...base.operationStatusRules,
+      ...(override.operationStatusRules ?? {}),
+    },
+    screens: base.screens,
   }
 }

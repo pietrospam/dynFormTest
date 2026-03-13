@@ -1,15 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { jsonConfigs, type JsonConfigKey } from '../config/jsonConfigs'
 import { Button, Select, TextInput, Textarea } from './ui'
 import type {
   ContainerDefinition,
-  ErrorCatalogEntry,
   FieldDefinition,
-  FieldOptionsConfig,
-  OperationStatusRule,
-  OperationTypeRule,
+  FormConfig,
+  FormConfigScreenOverrides,
   ValidationRule,
-} from '../../src/types/config.types'
+} from '../../../src/types/config.types'
 
 function downloadText(filename: string, text: string) {
   const blob = new Blob([text], { type: 'application/json;charset=utf-8' })
@@ -236,25 +234,53 @@ function ValidationRulesEditor({
   )
 }
 
-function ConfigEditor() {
+function getConfigForFile(file: JsonConfigKey, config: FormConfig): unknown {
+  switch (file) {
+    case 'containers.definition.json':
+      return config.containers
+    case 'fieldDefinitions.json':
+      return config.fieldDefinitions
+    case 'fieldOptions.json':
+      return config.fieldOptions
+    case 'validationRules.json':
+      return config.validationRules
+    case 'errorCatalog.json':
+      return config.errorCatalog
+    case 'operationTypeRules.json':
+      return config.operationTypeRules
+    case 'operationStatusRules.json':
+      return config.operationStatusRules
+    case 'screens.json':
+      return config.screens ?? {}
+    default:
+      return null
+  }
+}
+
+function ConfigEditor({
+  config,
+  onConfigChange,
+}: {
+  config: FormConfig
+  onConfigChange?: (file: JsonConfigKey, value: unknown) => void
+}) {
   const files = useMemo(() => Object.keys(jsonConfigs) as JsonConfigKey[], [])
   const [selected, setSelected] = useState<JsonConfigKey>(files[0])
   const [mode, setMode] = useState<EditorMode>('visual')
-  const [configData, setConfigData] = useState<unknown>(
-    jsonConfigs[files[0]]
+  const [configData, setConfigData] = useState<unknown>(() =>
+    getConfigForFile(files[0], config)
   )
   const [text, setText] = useState(() =>
-    JSON.stringify(jsonConfigs[files[0]], null, 2)
+    JSON.stringify(getConfigForFile(files[0], config), null, 2)
   )
   const [error, setError] = useState<string | null>(null)
 
-  const parsed = useMemo(() => {
-    try {
-      return JSON.parse(text)
-    } catch (err: unknown) {
-      return null
-    }
-  }, [text])
+  useEffect(() => {
+    const value = getConfigForFile(selected, config)
+    setConfigData(value)
+    setText(JSON.stringify(value, null, 2))
+    setError(null)
+  }, [config, selected])
 
   const validate = () => {
     try {
@@ -269,9 +295,6 @@ function ConfigEditor() {
 
   const handleFileChange = (file: JsonConfigKey) => {
     setSelected(file)
-    setConfigData(jsonConfigs[file])
-    setText(JSON.stringify(jsonConfigs[file], null, 2))
-    setError(null)
   }
 
   const handleDownload = () => {
@@ -289,14 +312,16 @@ function ConfigEditor() {
   }
 
   const handleReset = () => {
-    setConfigData(jsonConfigs[selected])
-    setText(JSON.stringify(jsonConfigs[selected], null, 2))
+    const value = getConfigForFile(selected, config)
+    setConfigData(value)
+    setText(JSON.stringify(value, null, 2))
     setError(null)
   }
 
   const safeSetConfigData = (next: unknown) => {
     setConfigData(next)
     setText(JSON.stringify(next, null, 2))
+    onConfigChange?.(selected, next)
   }
 
   const handleTextChange = (value: string) => {
@@ -347,6 +372,14 @@ function ConfigEditor() {
 
         <Button onClick={handleDownload} disabled={!!error}>
           Descargar
+        </Button>
+
+        <Button
+          onClick={() => onConfigChange?.(selected, configData)}
+          variant="secondary"
+          disabled={!!error || !onConfigChange}
+        >
+          Aplicar cambios en demo
         </Button>
 
         <Button onClick={handleCopy} variant="secondary">
@@ -415,6 +448,13 @@ function ConfigFileVisualEditor({
       return (
         <ValidationRulesEditor
           value={value as Record<string, ValidationRule[]>}
+          onChange={onChange}
+        />
+      )
+    case 'screens.json':
+      return (
+        <ScreensEditor
+          value={value as Record<string, FormConfigScreenOverrides>}
           onChange={onChange}
         />
       )
@@ -607,6 +647,105 @@ function FieldDefinitionsEditor({
           </Button>
         </div>
       </div>
+    </div>
+  )
+}
+
+function ScreensEditor({
+  value,
+  onChange,
+}: {
+  value: Record<string, FormConfigScreenOverrides>
+  onChange: (value: Record<string, FormConfigScreenOverrides>) => void
+}) {
+  const [newScreenId, setNewScreenId] = useState('')
+  const [texts, setTexts] = useState<Record<string, string>>({})
+  const [errors, setErrors] = useState<Record<string, string | null>>({})
+
+  // Sync local text representation when value changes.
+  useEffect(() => {
+    setTexts(
+      Object.fromEntries(
+        Object.entries(value).map(([key, val]) => [key, JSON.stringify(val, null, 2)])
+      )
+    )
+    setErrors({})
+  }, [value])
+
+  const addScreen = () => {
+    const id = newScreenId.trim()
+    if (!id || value[id]) return
+    onChange({ ...value, [id]: {} })
+    setNewScreenId('')
+  }
+
+  const removeScreen = (id: string) => {
+    const next = { ...value }
+    delete next[id]
+    onChange(next)
+  }
+
+  const updateScreenJson = (id: string, jsonText: string) => {
+    setTexts((prev) => ({ ...prev, [id]: jsonText }))
+    try {
+      const parsed = JSON.parse(jsonText)
+      setErrors((prev) => ({ ...prev, [id]: null }))
+      onChange({ ...value, [id]: parsed })
+    } catch (err: unknown) {
+      setErrors((prev) => ({
+        ...prev,
+        [id]: err instanceof Error ? err.message : String(err),
+      }))
+    }
+  }
+
+  return (
+    <div>
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold">Pantallas</h3>
+        <p className="text-sm text-gray-500">
+          Crea diferentes pantallas (screenId) y define overrides de configuración.
+        </p>
+      </div>
+
+      <div className="border rounded p-3 mb-4">
+        <h4 className="text-sm font-semibold mb-2">Agregar nueva pantalla</h4>
+        <div className="flex gap-2 flex-wrap">
+          <TextInput
+            label="ID de pantalla"
+            value={newScreenId}
+            onChange={setNewScreenId}
+            placeholder="ej: pantallaC"
+          />
+          <Button onClick={addScreen} disabled={!newScreenId.trim()}>
+            Agregar
+          </Button>
+        </div>
+      </div>
+
+      {Object.entries(value).map(([id]) => (
+        <details key={id} className="border rounded p-3 mb-3" open>
+          <summary className="cursor-pointer font-semibold">{id}</summary>
+          <div className="mt-3">
+            <Button
+              variant="secondary"
+              onClick={() => removeScreen(id)}
+              className="mb-3"
+            >
+              Eliminar pantalla
+            </Button>
+            <Textarea
+              label="Overrides (JSON)"
+              value={texts[id] ?? ''}
+              onChange={(v) => updateScreenJson(id, v)}
+              rows={10}
+            />
+            {errors[id] && (
+              <div className="text-sm text-red-600 mt-2">{errors[id]}</div>
+            )}
+          </div>
+        </details>
+      ))}
     </div>
   )
 }

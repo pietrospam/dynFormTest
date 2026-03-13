@@ -6,6 +6,7 @@ import validationRules from '../../../config/validationRules.json'
 import errorCatalog from '../../../config/errorCatalog.json'
 import operationTypeRules from '../../../config/operationTypeRules.json'
 import operationStatusRules from '../../../config/operationStatusRules.json'
+import screens from '../../../config/screens.json'
 
 export const config = {
   containers,
@@ -15,6 +16,7 @@ export const config = {
   errorCatalog,
   operationTypeRules,
   operationStatusRules,
+  screens,
 }
 
 // Available operation types and statuses for UI

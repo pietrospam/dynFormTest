@@ -27,6 +27,57 @@ La aplicación debe permitir seleccionar y editar al menos:
 - `operationTypeRules.json`
 - `operationStatusRules.json`
 
+### Múltiples pantallas (screenId)
+
+Para soportar casos donde distintas pantallas usan configuraciones diferentes (o incluso config totalmente distintas), la librería acepta un contexto con `screenId`.
+
+- El archivo principal puede incluir una sección `screens` con overrides de configuración.
+- El motor aplica la configuración base y luego mezcla (merge) los overrides del `screenId` activo.
+
+Ejemplo de estructura mínima:
+
+```json
+{
+  "containers": { ... },
+  "fieldDefinitions": { ... },
+  "errorCatalog": { ... },
+  "screens": {
+    "pantallaA": {
+      "containers": {
+        "datosTransportista": { "visible": false }
+      }
+    },
+    "pantallaB": {
+      "fieldDefinitions": {
+        "cuitTransportista": { "label": "CUIT (pantalla B)" }
+      }
+    }
+  }
+}
+```
+
+En el código, se pasa `screenId` dentro del contexto al motor:
+
+```ts
+const context = {
+  screenId: 'pantallaA',
+  operationType: 'PMI',
+  operationStatus: 'PENDIENTE',
+}
+
+const engine = new FormRulesEngine()
+engine.load(config)
+const formDef = engine.getFormDefinition(context)
+```
+
+De este modo, podés tener múltiples pantallas con reglas, campos y layouts distintos sin necesidad de tener varios motores.
+
+### Cómo testearlo
+
+Se agregó un test en `tests/unit/screen-mode.spec.ts` que valida que:
+- la pantalla `screenA` aplique correctamente el override definido en `screens`
+- los contenedores/fields se resuelvan según ese override
+
 
 ### Funcionalidades mínimas
 

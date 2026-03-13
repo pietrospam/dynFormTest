@@ -99,6 +99,16 @@ export interface GlobalOverrides {
 export type OperationStatusRule = GlobalOverrides
 
 // Full configuration object
+export type FormConfigScreenOverrides = Partial<{
+  containers: Record<string, ContainerDefinition>
+  fieldDefinitions: Record<string, FieldDefinition>
+  fieldOptions: Record<string, FieldOptionsConfig>
+  validationRules: Record<string, ValidationRule[]>
+  errorCatalog: Record<string, ErrorCatalogEntry>
+  operationTypeRules: Record<string, OperationTypeRule>
+  operationStatusRules: Record<string, OperationStatusRule>
+}>
+
 export interface FormConfig {
   containers: Record<string, ContainerDefinition>
   fieldDefinitions: Record<string, FieldDefinition>
@@ -107,4 +117,9 @@ export interface FormConfig {
   errorCatalog: Record<string, ErrorCatalogEntry>
   operationTypeRules: Record<string, OperationTypeRule>
   operationStatusRules: Record<string, OperationStatusRule>
+  /**
+   * Optional screen-based overrides.
+   * When context.screenId is provided, the engine will merge the override config.
+   */
+  screens?: Record<string, FormConfigScreenOverrides>
 }

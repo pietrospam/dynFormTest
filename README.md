@@ -29,9 +29,89 @@ El frontend React resuelve:
 - breakpoints y responsividad
 - componente React concreto
 
+## Soporte de múltiples pantallas (`screenId`)
+
+La librería permite **usar distintas configuraciones según la pantalla** (o workflow) mediante un `screenId` en el contexto.
+
+### Cómo funciona
+
+- Pasás `screenId` junto con `operationType` / `operationStatus` al motor.
+- La configuración JSON puede tener una sección `screens` con overrides:
+  - El motor aplica la config base y luego mezcla (merge) los overrides de `screens[screenId]`.
+- Esto permite tener:
+  - **Distintas pantallas** que muestran campos distintos.
+  - **Flujos completamente diferentes** (sin usar `operationType` / `operationStatus`).
+
+### Estructura de ejemplo
+
+```json
+{
+  "containers": { ... },
+  "fieldDefinitions": { ... },
+  "errorCatalog": { ... },
+  "screens": {
+    "pantallaA": {
+      "containers": {
+        "datosTransportista": { "visible": false }
+      }
+    },
+    "pantallaB": {
+      "fieldDefinitions": {
+        "nombreTransportista": { "label": "Nombre (pantalla B)" }
+      }
+    }
+  }
+}
+```
+
+### Uso en el código
+
+```ts
+const context = {
+  screenId: 'pantallaA',
+  operationType: 'PMI',
+  operationStatus: 'PENDIENTE',
+}
+
+const engine = new FormRulesEngine()
+engine.load(config)
+const formDef = engine.getFormDefinition(context)
+```
+
+> En el demo (carpeta `demo/`) podés crear nuevas `screenId` desde la interfaz y editar los overrides en el archivo `screens.json` directamente.
+
+### Tests
+
+Se incluye un test específico para validar que el `screenId` aplica los overrides correctamente:
+- `tests/unit/screen-mode.spec.ts`
+
 ## Carpeta de docs
 
 - `docs/spec.md`: spec funcional y técnica reformulada
+
+## Ejecución
+
+### Instalar dependencias
+
+```bash
+npm install
+```
+
+### Ejecutar tests
+
+```bash
+npm test
+```
+
+### Ejecutar demo (React)
+
+```bash
+cd demo
+npm install
+npm run dev
+```
+
+(Normalmente el demo corre en `http://localhost:5173/`)
 
 ## Carpeta de config
 

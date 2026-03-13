@@ -5,6 +5,7 @@ import validationRules from '../../../config/validationRules.json'
 import errorCatalog from '../../../config/errorCatalog.json'
 import operationTypeRules from '../../../config/operationTypeRules.json'
 import operationStatusRules from '../../../config/operationStatusRules.json'
+import screens from '../../../config/screens.json'
 
 export const jsonConfigs = {
   'containers.definition.json': containers,
@@ -14,6 +15,7 @@ export const jsonConfigs = {
   'errorCatalog.json': errorCatalog,
   'operationTypeRules.json': operationTypeRules,
   'operationStatusRules.json': operationStatusRules,
+  'screens.json': screens,
 } as const
 
 export type JsonConfigKey = keyof typeof jsonConfigs

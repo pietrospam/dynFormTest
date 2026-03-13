@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   ControlPanel,
   ConfigEditor,
@@ -8,13 +8,56 @@ import {
 } from './components'
 import { Button } from './components/ui'
 import { useFormEngine } from './hooks/useFormEngine'
+import { config } from './config'
+import type { FormConfig } from '../../src/types/config.types'
 import type { FormContext } from '../../src/types/engine.types'
 import type { FormValidationResult } from '../../src/types/validation.types'
 import type { ResolvedField } from '../../src/types/engine.types'
 
 function App() {
+  // Config state (allows edits in demo to affect the engine)
+  const [runtimeConfig, setRuntimeConfig] = useState<FormConfig>(
+    config as unknown as FormConfig
+  )
+
+  const handleConfigChange = (file: string, value: unknown) => {
+    setRuntimeConfig((prev) => {
+      const next = { ...prev }
+      switch (file) {
+        case 'containers.definition.json':
+          next.containers = value as typeof prev.containers
+          break
+        case 'fieldDefinitions.json':
+          next.fieldDefinitions = value as typeof prev.fieldDefinitions
+          break
+        case 'fieldOptions.json':
+          next.fieldOptions = value as typeof prev.fieldOptions
+          break
+        case 'validationRules.json':
+          next.validationRules = value as typeof prev.validationRules
+          break
+        case 'errorCatalog.json':
+          next.errorCatalog = value as typeof prev.errorCatalog
+          break
+        case 'operationTypeRules.json':
+          next.operationTypeRules = value as typeof prev.operationTypeRules
+          break
+        case 'operationStatusRules.json':
+          next.operationStatusRules = value as typeof prev.operationStatusRules
+          break
+        case 'screens.json':
+          next.screens = value as typeof prev.screens
+          break
+        default:
+          break
+      }
+      return next
+    })
+  }
+
   // Context state
   const [context, setContext] = useState<FormContext>({
+    screenId: 'default',
     operationType: 'PMI',
     operationStatus: 'PENDIENTE',
   })
@@ -26,7 +69,7 @@ function App() {
     validateForm,
     validateField,
     getFieldDefinition,
-  } = useFormEngine(context)
+  } = useFormEngine(context, runtimeConfig)
 
   // Form data state
   const [formData, setFormData] = useState<Record<string, unknown>>({})
@@ -108,6 +151,22 @@ function App() {
 
   const [view, setView] = useState<'form' | 'config'>('form')
 
+  const screenOptions = Object.keys(runtimeConfig.screens ?? {}).map((id) => ({
+    value: id,
+    label: id === 'default' ? 'Default (sin override)' : id,
+  }))
+
+  const handleCreateScreen = (id: string) => {
+    setRuntimeConfig((prev) => ({
+      ...prev,
+      screens: {
+        ...(prev.screens ?? {}),
+        [id]: {},
+      },
+    }))
+    setContext((prev) => ({ ...prev, screenId: id }))
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
@@ -152,6 +211,8 @@ function App() {
               onContextChange={setContext}
               onValidate={handleValidate}
               onReset={handleReset}
+              screenOptions={screenOptions}
+              onCreateScreen={handleCreateScreen}
             />
           </div>
 
@@ -179,7 +240,7 @@ function App() {
                 </div>
               </>
             ) : (
-              <ConfigEditor />
+              <ConfigEditor config={runtimeConfig} onConfigChange={handleConfigChange} />
             )}
           </div>
 

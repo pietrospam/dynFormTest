@@ -1,16 +1,16 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useMemo, useCallback } from 'react'
 import { FormRulesEngine } from '../../../src/engine/FormRulesEngine'
 import type { FormContext, FormData, ResolvedFormDefinition } from '../../../src/types/engine.types'
 import type { FormValidationResult, FieldValidationResult } from '../../../src/types/validation.types'
-import { config } from '../config'
+import type { FormConfig } from '../../../src/types/config.types'
 
-export function useFormEngine(context: FormContext) {
-  // Initialize engine once
-  const [engine] = useState(() => {
+export function useFormEngine(context: FormContext, config: FormConfig) {
+  // Rebuild engine whenever the configuration changes.
+  const engine = useMemo(() => {
     const e = new FormRulesEngine()
     e.load(config)
     return e
-  })
+  }, [config])
 
   // Get form definition based on context
   const formDefinition: ResolvedFormDefinition = useMemo(

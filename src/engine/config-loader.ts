@@ -37,6 +37,7 @@ export function loadConfig(config: unknown): FormConfig {
     errorCatalog: cfg.errorCatalog as FormConfig['errorCatalog'],
     operationTypeRules: (cfg.operationTypeRules as FormConfig['operationTypeRules']) || {},
     operationStatusRules: (cfg.operationStatusRules as FormConfig['operationStatusRules']) || {},
+    screens: (cfg.screens as FormConfig['screens']) || {},
   }
 
   // Validate error codes referenced in validation rules exist in catalog

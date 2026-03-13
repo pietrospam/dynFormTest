@@ -11,6 +11,7 @@ import type {
 
 // Context object for form resolution
 export interface FormContext {
+  screenId?: string
   operationType: string
   operationStatus: string
   [key: string]: unknown
