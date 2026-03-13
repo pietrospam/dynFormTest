@@ -1,0 +1,81 @@
+{
+  "cuitTransportista": {
+    "container": "datosTransportista",
+    "dataType": "string",
+    "label": "CUIT",
+    "defaultValue": "",
+    "allowEmpty": false,
+    "ui": {
+      "component": "TextInput",
+      "placeholder": "Ingresá el CUIT",
+      "inputProps": {
+        "maxLength": 11
+      }
+    }
+  },
+  "nombreTransportista": {
+    "container": "datosTransportista",
+    "dataType": "string",
+    "label": "Nombre y apellido",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": {
+      "component": "TextInput",
+      "placeholder": "Ingresá nombre y apellido",
+      "inputProps": {
+        "maxLength": 80
+      }
+    }
+  },
+  "tipoDocumento": {
+    "container": "datosTransportista",
+    "dataType": "string",
+    "label": "Tipo documento",
+    "defaultValue": null,
+    "allowEmpty": true,
+    "ui": {
+      "component": "Select"
+    }
+  },
+  "pesoBruto": {
+    "container": "datosCarga",
+    "dataType": "number",
+    "label": "Peso bruto",
+    "defaultValue": null,
+    "allowEmpty": false,
+    "ui": {
+      "component": "NumberInput",
+      "placeholder": "0"
+    }
+  },
+  "observaciones": {
+    "container": "datosCarga",
+    "dataType": "string",
+    "label": "Observaciones",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": {
+      "component": "Textarea",
+      "placeholder": "Observaciones",
+      "inputProps": {
+        "maxLength": 200
+      }
+    }
+  },
+  "brix": {
+    "container": "datosCalidad",
+    "dataType": "number",
+    "label": "Grados Brix",
+    "defaultValue": null,
+    "allowEmpty": false,
+    "ui": {
+      "component": "NumberInput",
+      "placeholder": "Ej: 18.5",
+      "inputProps": {
+        "step": 0.01,
+        "min": 10,
+        "max": 25
+      }
+    }
+  }
+}

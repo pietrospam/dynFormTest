@@ -1,0 +1,31 @@
+{
+  "name": "dynamic-form-rules-engine",
+  "version": "1.0.0",
+  "description": "Dynamic Form Rules Engine - Librería para gestión de formularios dinámicos con reglas declarativas en JSON",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "demo": "npx tsx examples/demo.ts",
+    "lint": "eslint src tests",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "form",
+    "rules",
+    "engine",
+    "validation",
+    "react",
+    "electron"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.2.0"
+  }
+}

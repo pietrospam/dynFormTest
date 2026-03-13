@@ -1,0 +1,37 @@
+{
+  "PMI": {
+    "containers": {
+      "datosTransportista": { "visible": true, "enabled": true },
+      "datosCarga": { "visible": true, "enabled": true },
+      "datosCalidad": { "visible": false }
+    },
+    "fields": {
+      "cuitTransportista": { "visible": true, "enabled": true, "required": true },
+      "nombreTransportista": { "visible": true, "enabled": true, "required": false },
+      "tipoDocumento": { "visible": true, "enabled": true, "required": false },
+      "pesoBruto": { "visible": true, "enabled": true, "required": true },
+      "observaciones": { "visible": true, "enabled": true, "required": false }
+    }
+  },
+  "SIN_TRANSPORTISTA": {
+    "containers": {
+      "datosTransportista": { "visible": false },
+      "datosCarga": { "visible": true, "enabled": true },
+      "datosCalidad": { "visible": false }
+    },
+    "fields": {
+      "pesoBruto": { "visible": true, "enabled": true, "required": true },
+      "observaciones": { "visible": true, "enabled": true, "required": false }
+    }
+  },
+  "UVA": {
+    "containers": {
+      "datosTransportista": { "visible": false },
+      "datosCarga": { "visible": false },
+      "datosCalidad": { "visible": true, "enabled": true }
+    },
+    "fields": {
+      "brix": { "visible": true, "enabled": true, "required": true }
+    }
+  }
+}

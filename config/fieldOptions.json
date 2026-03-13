@@ -1,0 +1,12 @@
+{
+  "tipoDocumento": {
+    "source": "static",
+    "allowEmptyOption": true,
+    "emptyOptionLabel": "-- seleccionar --",
+    "items": [
+      { "value": "DNI", "label": "DNI" },
+      { "value": "CUIT", "label": "CUIT" },
+      { "value": "PASAPORTE", "label": "Pasaporte" }
+    ]
+  }
+}

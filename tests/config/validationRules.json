@@ -1,0 +1,26 @@
+{
+  "cuitTransportista": [
+    { "type": "required", "errorCode": "ERR_REQUIRED" },
+    { "type": "numeric", "errorCode": "ERR_NUMERIC" },
+    { "type": "maxLength", "value": 11, "errorCode": "ERR_MAX_11" }
+  ],
+  "nombreTransportista": [
+    { "type": "maxLength", "value": 80, "errorCode": "ERR_MAX_80" }
+  ],
+  "tipoDocumento": [
+    { "type": "oneOf", "value": ["DNI", "CUIT", "PASAPORTE"], "errorCode": "ERR_INVALID_OPTION" }
+  ],
+  "pesoBruto": [
+    { "type": "required", "errorCode": "ERR_REQUIRED" },
+    { "type": "numeric", "errorCode": "ERR_NUMERIC" },
+    { "type": "positive", "errorCode": "ERR_POSITIVE" }
+  ],
+  "observaciones": [
+    { "type": "maxLength", "value": 200, "errorCode": "ERR_MAX_200" }
+  ],
+  "brix": [
+    { "type": "required", "errorCode": "ERR_REQUIRED" },
+    { "type": "numeric", "errorCode": "ERR_NUMERIC" },
+    { "type": "range", "value": [10, 25], "errorCode": "ERR_BRIX_RANGE" }
+  ]
+}
