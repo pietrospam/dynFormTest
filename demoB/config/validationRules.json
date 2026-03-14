@@ -1,0 +1,8 @@
+{
+  "nroTicketPesada": [{ "type": "required", "errorCode": "ERR_REQUIRED" }],
+  "planta": [{ "type": "required", "errorCode": "ERR_REQUIRED" }],
+  "choferNombreApellido": [{ "type": "required", "errorCode": "ERR_REQUIRED" }],
+  "patenteCamion": [{ "type": "required", "errorCode": "ERR_REQUIRED" }],
+  "pesoEntradaKg": [{ "type": "positive", "errorCode": "ERR_POSITIVE" }],
+  "pesoSalidaKg": [{ "type": "positive", "errorCode": "ERR_POSITIVE" }]
+}

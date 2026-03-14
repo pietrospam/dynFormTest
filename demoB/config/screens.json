@@ -1,0 +1,22 @@
+{
+  "default": {},
+  "OperacionesGenerales": {
+    "fields": {
+      "nroTicketPesada": { "enabled": false },
+      "estadoTicketPesada": { "enabled": false },
+      "fechaHoraIngreso": { "enabled": false },
+      "fechaHoraSalida": { "enabled": false },
+      "tiempoEsperaResidenciaMin": { "enabled": false },
+      "nroComprobantesReferencia": { "enabled": false },
+      "pesoEntradaKg": { "enabled": false },
+      "pesoSalidaKg": { "enabled": false },
+      "pesoNetoKg": { "enabled": false },
+      "pesoPackingListCartaPorteKg": { "enabled": false },
+      "diferenciaKg": { "enabled": false },
+      "diferenciaPct": { "enabled": false },
+      "nroInstrumentoPesada": { "enabled": false },
+      "nroCertificadoHabilitacionInstrumento": { "enabled": false },
+      "fechaVtoCertificado": { "enabled": false }
+    }
+  }
+}

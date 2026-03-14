@@ -1,0 +1,4 @@
+{
+  "ERR_REQUIRED": { "message": "Este campo es obligatorio" },
+  "ERR_POSITIVE": { "message": "El valor debe ser un número positivo" }
+}

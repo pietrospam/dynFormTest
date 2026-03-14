@@ -1,0 +1,38 @@
+{
+  "GASES": {
+    "fields": {
+      "tipoContenedor": { "visible": false },
+      "pesoTaraContenedorKg": { "visible": false },
+      "cantidadPalletsCanastoOtros": { "visible": false },
+      "pesoPalletsKg": { "visible": false },
+      "pesoPackingListCartaPorteKg": { "visible": false }
+    }
+  },
+  "VINOGRANEL": {
+    "fields": {
+      "tipoContenedor": { "visible": false },
+      "pesoTaraContenedorKg": { "visible": false },
+      "cantidadPalletsCanastoOtros": { "visible": false },
+      "pesoPalletsKg": { "visible": false },
+      "pesoPackingListCartaPorteKg": { "visible": false }
+    }
+  },
+  "SCRAP": {
+    "fields": {
+      "tipoContenedor": { "visible": false },
+      "pesoTaraContenedorKg": { "visible": false },
+      "cantidadPalletsCanastoOtros": { "visible": false },
+      "pesoPalletsKg": { "visible": false },
+      "pesoPackingListCartaPorteKg": { "visible": false }
+    }
+  },
+  "SERVICIOS": {
+    "fields": {
+      "tipoContenedor": { "visible": false },
+      "pesoTaraContenedorKg": { "visible": false },
+      "cantidadPalletsCanastoOtros": { "visible": false },
+      "pesoPalletsKg": { "visible": false },
+      "pesoPackingListCartaPorteKg": { "visible": false }
+    }
+  }
+}

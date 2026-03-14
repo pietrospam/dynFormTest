@@ -1,0 +1,32 @@
+{
+  "Cabecera": {
+    "label": "Cabecera",
+    "visible": true,
+    "enabled": true,
+    "ui": { "component": "Section" }
+  },
+  "Transportista": {
+    "label": "Transportista",
+    "visible": true,
+    "enabled": true,
+    "ui": { "component": "Section" }
+  },
+  "Camion": {
+    "label": "Camión",
+    "visible": true,
+    "enabled": true,
+    "ui": { "component": "Section" }
+  },
+  "Carga": {
+    "label": "Carga",
+    "visible": true,
+    "enabled": true,
+    "ui": { "component": "Section" }
+  },
+  "Footer": {
+    "label": "Footer",
+    "visible": true,
+    "enabled": true,
+    "ui": { "component": "Section" }
+  }
+}

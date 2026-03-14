@@ -1,0 +1,26 @@
+{
+  "planta": {
+    "source": "static",
+    "items": [
+      { "value": "PLANTA_A", "label": "Planta A" },
+      { "value": "PLANTA_B", "label": "Planta B" },
+      { "value": "PLANTA_C", "label": "Planta C" }
+    ]
+  },
+  "tipoMovimiento": {
+    "source": "static",
+    "items": [
+      { "value": "ENTRADA", "label": "Entrada" },
+      { "value": "SALIDA", "label": "Salida" },
+      { "value": "TRASLADO", "label": "Traslado" }
+    ]
+  },
+  "tipoCarga": {
+    "source": "static",
+    "items": [
+      { "value": "GRANEL", "label": "Granel" },
+      { "value": "CONTENEDOR", "label": "Contenedor" },
+      { "value": "PALET", "label": "Palet" }
+    ]
+  }
+}
