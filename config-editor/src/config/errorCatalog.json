@@ -1,10 +1,4 @@
 {
-  "ERR_REQUIRED": { "message": "El campo es obligatorio." },
-  "ERR_NUMERIC": { "message": "El valor debe ser numérico." },
-  "ERR_POSITIVE": { "message": "El valor debe ser mayor a 0." },
-  "ERR_MAX_11": { "message": "El valor no puede superar los 11 caracteres." },
-  "ERR_MAX_80": { "message": "El valor no puede superar los 80 caracteres." },
-  "ERR_MAX_200": { "message": "El valor no puede superar los 200 caracteres." },
-  "ERR_INVALID_OPTION": { "message": "La opción seleccionada no es válida." },
-  "ERR_BRIX_RANGE": { "message": "El campo brix debe ser un valor comprendido entre 10 y 25" }
+  "ERR_REQUIRED": { "message": "Este campo es obligatorio" },
+  "ERR_POSITIVE": { "message": "El valor debe ser un número positivo" }
 }

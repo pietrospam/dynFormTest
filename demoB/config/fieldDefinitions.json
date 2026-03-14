@@ -5,7 +5,7 @@
     "label": "Nro Ticket de Pesada",
     "defaultValue": "",
     "allowEmpty": true,
-    "ui": { "component": "TextInput" }
+    "ui": { "component": "Label" }
   },
   "planta": {
     "container": "Cabecera",

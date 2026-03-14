@@ -1,81 +1,325 @@
 {
-  "cuitTransportista": {
-    "container": "datosTransportista",
+  "nroTicketPesada": {
+    "container": "Cabecera",
     "dataType": "string",
-    "label": "CUIT",
-    "defaultValue": "",
-    "allowEmpty": false,
-    "ui": {
-      "component": "TextInput",
-      "placeholder": "Ingresá el CUIT",
-      "inputProps": {
-        "maxLength": 11
-      }
-    }
-  },
-  "nombreTransportista": {
-    "container": "datosTransportista",
-    "dataType": "string",
-    "label": "Nombre y apellido",
+    "label": "Nro Ticket de Pesada",
     "defaultValue": "",
     "allowEmpty": true,
-    "ui": {
-      "component": "TextInput",
-      "placeholder": "Ingresá nombre y apellido",
-      "inputProps": {
-        "maxLength": 80
-      }
-    }
+    "ui": { "component": "Label" }
   },
-  "tipoDocumento": {
-    "container": "datosTransportista",
+  "planta": {
+    "container": "Cabecera",
     "dataType": "string",
-    "label": "Tipo documento",
-    "defaultValue": null,
+    "label": "Planta",
+    "defaultValue": "",
     "allowEmpty": true,
-    "ui": {
-      "component": "Select"
-    }
+    "ui": { "component": "Select" }
   },
-  "pesoBruto": {
-    "container": "datosCarga",
+  "estadoTicketPesada": {
+    "container": "Cabecera",
+    "dataType": "string",
+    "label": "Estado Ticket de Pesada",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "fechaHoraIngreso": {
+    "container": "Cabecera",
+    "dataType": "string",
+    "label": "Fecha/Hora Ingreso",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "fechaHoraSalida": {
+    "container": "Cabecera",
+    "dataType": "string",
+    "label": "Fecha/Hora Salida",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "tiempoEsperaResidenciaMin": {
+    "container": "Cabecera",
     "dataType": "number",
-    "label": "Peso bruto",
-    "defaultValue": null,
-    "allowEmpty": false,
-    "ui": {
-      "component": "NumberInput",
-      "placeholder": "0"
-    }
+    "label": "Tiempo Espera Residencia (min)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "tipoMovimiento": {
+    "container": "Cabecera",
+    "dataType": "string",
+    "label": "Tipo de Movimiento",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "Select" }
+  },
+  "origen": {
+    "container": "Cabecera",
+    "dataType": "string",
+    "label": "Origen",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "destino": {
+    "container": "Cabecera",
+    "dataType": "string",
+    "label": "Destino",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "operacion": {
+    "container": "Cabecera",
+    "dataType": "string",
+    "label": "Operación",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "tipoCarga": {
+    "container": "Cabecera",
+    "dataType": "string",
+    "label": "Tipo de Carga",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "Select" }
+  },
+
+  "transportistaRazonSocial": {
+    "container": "Transportista",
+    "dataType": "string",
+    "label": "Transportista (Razón Social)",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "transportistaCuit": {
+    "container": "Transportista",
+    "dataType": "string",
+    "label": "Transportista CUIT",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "choferNombreApellido": {
+    "container": "Transportista",
+    "dataType": "string",
+    "label": "Chofer (Nombre y Apellido)",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "choferNroLicencia": {
+    "container": "Transportista",
+    "dataType": "string",
+    "label": "Chofer Nro. Licencia",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "choferCuil": {
+    "container": "Transportista",
+    "dataType": "string",
+    "label": "Chofer CUIL",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+
+  "patenteCamion": {
+    "container": "Camion",
+    "dataType": "string",
+    "label": "Patente Camión",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "cantidadPesadas": {
+    "container": "Camion",
+    "dataType": "number",
+    "label": "Cantidad de Pesadas",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "patenteAcoplado1": {
+    "container": "Camion",
+    "dataType": "string",
+    "label": "Patente Acoplado 1",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "patenteAcoplado2": {
+    "container": "Camion",
+    "dataType": "string",
+    "label": "Patente Acoplado 2",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "patenteAcoplado3": {
+    "container": "Camion",
+    "dataType": "string",
+    "label": "Patente Acoplado 3",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "nroComprobantesReferencia": {
+    "container": "Camion",
+    "dataType": "string",
+    "label": "Nro Comprobantes / Referencia",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+
+  "pesoEntradaKg": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Peso Entrada (kg)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "pesoSalidaKg": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Peso Salida (kg)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "pesoNetoKg": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Peso Neto (kg)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "tipoContenedor": {
+    "container": "Footer",
+    "dataType": "string",
+    "label": "Tipo Contenedor",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "pesoTaraContenedorKg": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Peso Tara Contenedor (kg)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "cantidadPalletsCanastoOtros": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Cantidad Pallets / Canasto / Otros",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "pesoPalletsKg": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Peso Pallets (kg)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "pesoPackingListCartaPorteKg": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Peso Packing List / Carta Porte (kg)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "diferenciaKg": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Diferencia (kg)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "diferenciaPct": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Diferencia (%)",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "volumenTransito": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Volumen en Tránsito",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "litrosPorPesada": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Litros por Pesada",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "densidad": {
+    "container": "Footer",
+    "dataType": "number",
+    "label": "Densidad",
+    "defaultValue": 0,
+    "allowEmpty": true,
+    "ui": { "component": "NumberInput" }
+  },
+  "precintos": {
+    "container": "Footer",
+    "dataType": "string",
+    "label": "Precintos",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
   },
   "observaciones": {
-    "container": "datosCarga",
+    "container": "Footer",
     "dataType": "string",
     "label": "Observaciones",
     "defaultValue": "",
     "allowEmpty": true,
-    "ui": {
-      "component": "Textarea",
-      "placeholder": "Observaciones",
-      "inputProps": {
-        "maxLength": 200
-      }
-    }
+    "ui": { "component": "Textarea" }
   },
-  "brix": {
-    "container": "datosCalidad",
-    "dataType": "number",
-    "label": "Grados Brix",
-    "defaultValue": null,
-    "allowEmpty": false,
-    "ui": {
-      "component": "NumberInput",
-      "placeholder": "Ej: 18.5",
-      "inputProps": {
-        "step": 0.01,
-        "min": 10,
-        "max": 25
-      }
-    }
+  "nroInstrumentoPesada": {
+    "container": "Footer",
+    "dataType": "string",
+    "label": "Nro Instrumento de Pesada",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "nroCertificadoHabilitacionInstrumento": {
+    "container": "Footer",
+    "dataType": "string",
+    "label": "Nro Certificado de Habilitación",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
+  },
+  "fechaVtoCertificado": {
+    "container": "Footer",
+    "dataType": "string",
+    "label": "Fecha Vto. Certificado",
+    "defaultValue": "",
+    "allowEmpty": true,
+    "ui": { "component": "TextInput" }
   }
 }

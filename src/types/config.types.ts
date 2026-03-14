@@ -3,7 +3,14 @@
 // ============================================
 
 // UI Component types
-export type UIComponentType = 'TextInput' | 'Select' | 'NumberInput' | 'Textarea' | 'Section' | string
+export type UIComponentType =
+  | 'TextInput'
+  | 'Select'
+  | 'NumberInput'
+  | 'Textarea'
+  | 'Label'
+  | 'Section'
+  | string
 
 // Input props for UI components
 export interface InputProps {

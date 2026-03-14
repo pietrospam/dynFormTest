@@ -9,6 +9,7 @@ const configFiles = [
   'errorCatalog.json',
   'operationTypeRules.json',
   'operationStatusRules.json',
+  'screens.json',
 ] as const
 
 type ConfigFileKey = (typeof configFiles)[number]
@@ -61,6 +62,11 @@ type FieldOption = {
 }
 
 type ErrorCatalog = Record<string, { message: string }>
+
+type ScreenOverride = {
+  containers?: Record<string, OverrideRule>
+  fields?: Record<string, OverrideRule>
+}
 
 function downloadText(filename: string, text: string) {
   const blob = new Blob([text], { type: 'application/json;charset=utf-8' })
@@ -236,11 +242,20 @@ export function ConfigEditor() {
             onChange={(next) => setConfigObject(next)}
           />
         )
-      case 'errorCatalog.json':
+          case 'errorCatalog.json':
         return (
           <ErrorCatalogEditor
             value={parsed as ErrorCatalog}
             onChange={(next) => setConfigObject(next)}
+          />
+        )
+      case 'screens.json':
+        return (
+          <ScreensEditor
+            value={parsed as Record<string, ScreenOverride>}
+            onChange={(next) => setConfigObject(next)}
+            availableContainers={availableContainers}
+            availableFields={availableFields}
           />
         )
       default:
@@ -265,7 +280,7 @@ export function ConfigEditor() {
     },
     {
       label: 'Otros',
-      files: ['fieldOptions.json', 'errorCatalog.json'] as const,
+      files: ['fieldOptions.json', 'errorCatalog.json', 'screens.json'] as const,
     },
   ]
 
@@ -1413,6 +1428,340 @@ function FieldOptionsEditor({
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  )
+}
+
+function ScreensEditor({
+  value,
+  onChange,
+  availableContainers,
+  availableFields,
+}: {
+  value: Record<string, ScreenOverride>
+  onChange: (value: Record<string, ScreenOverride>) => void
+  availableContainers: string[]
+  availableFields: string[]
+}) {
+  const [newScreenId, setNewScreenId] = useState('')
+  const [texts, setTexts] = useState<Record<string, string>>({})
+  const [errors, setErrors] = useState<Record<string, string | null>>({})
+
+  useEffect(() => {
+    setTexts(
+      Object.fromEntries(
+        Object.entries(value).map(([key, val]) => [key, JSON.stringify(val, null, 2)])
+      )
+    )
+    setErrors({})
+  }, [value])
+
+  const addScreen = () => {
+    const key = newScreenId.trim()
+    if (!key || value[key]) return
+    onChange({ ...value, [key]: {} })
+    setNewScreenId('')
+  }
+
+  const removeScreen = (key: string) => {
+    const next = { ...value }
+    delete next[key]
+    onChange(next)
+  }
+
+  const updateScreen = (key: string, jsonText: string) => {
+    setTexts((prev) => ({ ...prev, [key]: jsonText }))
+    try {
+      const parsed = JSON.parse(jsonText)
+      setErrors((prev) => ({ ...prev, [key]: null }))
+      onChange({ ...value, [key]: parsed })
+    } catch (err: unknown) {
+      setErrors((prev) => ({
+        ...prev,
+        [key]: err instanceof Error ? err.message : String(err),
+      }))
+    }
+  }
+
+  return (
+    <div>
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold">Pantallas (screens)</h3>
+        <p className="text-sm text-gray-500">
+          Crea y edita overrides por pantalla (screenId). Se pueden ajustar contenedores y campos.
+        </p>
+      </div>
+
+      <div className="border rounded-lg bg-white p-4 mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+          <TextInput
+            label="Nueva pantalla"
+            value={newScreenId}
+            onChange={setNewScreenId}
+            placeholder="ej: pantallaA"
+          />
+          <Button onClick={addScreen} disabled={!newScreenId.trim()}>
+            Agregar pantalla
+          </Button>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {Object.entries(value).map(([key, screen]) => {
+          const current = screen as ScreenOverride
+          return (
+            <details key={key} className="border rounded-lg bg-gray-50 p-4" open>
+              <summary className="cursor-pointer font-semibold">{key}</summary>
+              <div className="mt-3">
+                <Button
+                  variant="secondary"
+                  onClick={() => removeScreen(key)}
+                  className="mb-3"
+                >
+                  Eliminar pantalla
+                </Button>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="border rounded-lg bg-white p-4">
+                    <div className="text-sm font-semibold mb-2">Contenedores</div>
+                    <div className="space-y-3">
+                      {(Object.entries(current.containers ?? {}) as [
+                        string,
+                        OverrideRule
+                      ][]).map(([containerId, override]) => (
+                        <div
+                          key={containerId}
+                          className="grid grid-cols-1 md:grid-cols-4 gap-2 items-center bg-gray-50 p-2 rounded"
+                        >
+                          <div>
+                            <div className="font-medium">{containerId}</div>
+                          </div>
+                          <label className="inline-flex items-center gap-2 text-sm">
+                            <input
+                              type="checkbox"
+                              checked={override.visible ?? false}
+                              onChange={(e) => {
+                                const next = {
+                                  ...current,
+                                  containers: {
+                                    ...current.containers,
+                                    [containerId]: {
+                                      ...override,
+                                      visible: e.target.checked,
+                                    },
+                                  },
+                                }
+                                onChange({ ...value, [key]: next })
+                              }}
+                              className="form-checkbox h-4 w-4 text-blue-600"
+                            />
+                            Visible
+                          </label>
+                          <label className="inline-flex items-center gap-2 text-sm">
+                            <input
+                              type="checkbox"
+                              checked={override.enabled ?? false}
+                              onChange={(e) => {
+                                const next = {
+                                  ...current,
+                                  containers: {
+                                    ...current.containers,
+                                    [containerId]: {
+                                      ...override,
+                                      enabled: e.target.checked,
+                                    },
+                                  },
+                                }
+                                onChange({ ...value, [key]: next })
+                              }}
+                              className="form-checkbox h-4 w-4 text-blue-600"
+                            />
+                            Habilitado
+                          </label>
+                          <button
+                            type="button"
+                            className="text-xs text-red-600 hover:underline"
+                            onClick={() => {
+                              const nextContainers = { ...current.containers }
+                              if (nextContainers) delete nextContainers[containerId]
+                              onChange({
+                                ...value,
+                                [key]: { ...current, containers: nextContainers },
+                              })
+                            }}
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      ))}
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-end">
+                        <Select
+                          label="Agregar contenedor"
+                          value=""
+                          onChange={(v) => {
+                            if (!v) return
+                            onChange({
+                              ...value,
+                              [key]: {
+                                ...current,
+                                containers: {
+                                  ...current.containers,
+                                  [v]: {},
+                                },
+                              },
+                            })
+                          }}
+                          options={
+                            availableContainers
+                              .filter((c) => !(current.containers && c in current.containers))
+                              .map((c) => ({ value: c, label: c }))
+                          }
+                        />
+                        <div />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border rounded-lg bg-white p-4">
+                    <div className="text-sm font-semibold mb-2">Campos</div>
+                    <div className="space-y-3">
+                      {(Object.entries(current.fields ?? {}) as [string, OverrideRule][]).map(
+                        ([fieldId, override]) => (
+                          <div
+                            key={fieldId}
+                            className="grid grid-cols-1 md:grid-cols-4 gap-2 items-center bg-gray-50 p-2 rounded"
+                          >
+                            <div>
+                              <div className="font-medium">{fieldId}</div>
+                            </div>
+                            <label className="inline-flex items-center gap-2 text-sm">
+                              <input
+                                type="checkbox"
+                                checked={override.visible ?? false}
+                                onChange={(e) => {
+                                  const next = {
+                                    ...current,
+                                    fields: {
+                                      ...current.fields,
+                                      [fieldId]: {
+                                        ...override,
+                                        visible: e.target.checked,
+                                      },
+                                    },
+                                  }
+                                  onChange({ ...value, [key]: next })
+                                }}
+                                className="form-checkbox h-4 w-4 text-blue-600"
+                              />
+                              Visible
+                            </label>
+                            <label className="inline-flex items-center gap-2 text-sm">
+                              <input
+                                type="checkbox"
+                                checked={override.enabled ?? false}
+                                onChange={(e) => {
+                                  const next = {
+                                    ...current,
+                                    fields: {
+                                      ...current.fields,
+                                      [fieldId]: {
+                                        ...override,
+                                        enabled: e.target.checked,
+                                      },
+                                    },
+                                  }
+                                  onChange({ ...value, [key]: next })
+                                }}
+                                className="form-checkbox h-4 w-4 text-blue-600"
+                              />
+                              Habilitado
+                            </label>
+                            <label className="inline-flex items-center gap-2 text-sm">
+                              <input
+                                type="checkbox"
+                                checked={override.required ?? false}
+                                onChange={(e) => {
+                                  const next = {
+                                    ...current,
+                                    fields: {
+                                      ...current.fields,
+                                      [fieldId]: {
+                                        ...override,
+                                        required: e.target.checked,
+                                      },
+                                    },
+                                  }
+                                  onChange({ ...value, [key]: next })
+                                }}
+                                className="form-checkbox h-4 w-4 text-blue-600"
+                              />
+                              Requerido
+                            </label>
+                            <button
+                              type="button"
+                              className="text-xs text-red-600 hover:underline"
+                              onClick={() => {
+                                const nextFields = { ...current.fields }
+                                if (nextFields) delete nextFields[fieldId]
+                                onChange({
+                                  ...value,
+                                  [key]: { ...current, fields: nextFields },
+                                })
+                              }}
+                            >
+                              Eliminar
+                            </button>
+                          </div>
+                        )
+                      )}
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-end">
+                        <Select
+                          label="Agregar campo"
+                          value=""
+                          onChange={(v) => {
+                            if (!v) return
+                            onChange({
+                              ...value,
+                              [key]: {
+                                ...current,
+                                fields: {
+                                  ...current.fields,
+                                  [v]: {},
+                                },
+                              },
+                            })
+                          }}
+                          options={
+                            availableFields
+                              .filter((f) => !(current.fields && f in current.fields))
+                              .map((f) => ({ value: f, label: f }))
+                          }
+                        />
+                        <div />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <div className="text-sm font-semibold mb-2">JSON crudo</div>
+                  <Textarea
+                    label="Overrides JSON"
+                    value={texts[key] ?? ''}
+                    onChange={(v) => updateScreen(key, v)}
+                    rows={8}
+                  />
+                  {errors[key] && (
+                    <div className="mt-2 text-sm text-red-600">{errors[key]}</div>
+                  )}
+                </div>
+              </div>
+            </details>
+          )
+        })}
       </div>
     </div>
   )

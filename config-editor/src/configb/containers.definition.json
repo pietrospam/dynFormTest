@@ -1,0 +1,26 @@
+{
+  "datosTransportista": {
+    "label": "Datos del transportista",
+    "visible": true,
+    "enabled": true,
+    "ui": {
+      "component": "Section"
+    }
+  },
+  "datosCarga": {
+    "label": "Datos de la carga",
+    "visible": true,
+    "enabled": true,
+    "ui": {
+      "component": "Section"
+    }
+  },
+  "datosCalidad": {
+    "label": "Datos de Calidad",
+    "visible": true,
+    "enabled": true,
+    "ui": {
+      "component": "Section"
+    }
+  }
+}

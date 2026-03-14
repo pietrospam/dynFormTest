@@ -32,6 +32,9 @@ export const operationTypes = [
 ]
 
 export const operationStatuses = [
-  { value: 'PENDIENTE', label: 'Pendiente' },
-  { value: 'EGRESADA', label: 'Egresada' },
+  { value: 'NUEVO', label: 'NUEVO' },
+  { value: 'ANUNCIADO', label: 'ANUNCIADO' },
+  { value: 'INGRESADO', label: 'INGRESADO' },
+  { value: 'EGRESADO', label: 'EGRESADO' },
+  { value: 'CERRADO', label: 'CERRADO' },
 ]

@@ -1,26 +1,32 @@
 {
-  "datosTransportista": {
-    "label": "Datos del transportista",
+  "Cabecera": {
+    "label": "Cabecera",
     "visible": true,
     "enabled": true,
-    "ui": {
-      "component": "Section"
-    }
+    "ui": { "component": "Section" }
   },
-  "datosCarga": {
-    "label": "Datos de la carga",
+  "Transportista": {
+    "label": "Transportista",
     "visible": true,
     "enabled": true,
-    "ui": {
-      "component": "Section"
-    }
+    "ui": { "component": "Section" }
   },
-  "datosCalidad": {
-    "label": "Datos de Calidad",
+  "Camion": {
+    "label": "Camión",
     "visible": true,
     "enabled": true,
-    "ui": {
-      "component": "Section"
-    }
+    "ui": { "component": "Section" }
+  },
+  "Carga": {
+    "label": "Carga",
+    "visible": true,
+    "enabled": true,
+    "ui": { "component": "Section" }
+  },
+  "Footer": {
+    "label": "Footer",
+    "visible": true,
+    "enabled": true,
+    "ui": { "component": "Section" }
   }
 }

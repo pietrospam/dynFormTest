@@ -1,4 +1,4 @@
-import { TextInput, NumberInput, Select, Textarea } from './ui'
+import { TextInput, NumberInput, Select, Textarea, Label } from './ui'
 import type { ResolvedField } from '../../../src/types/engine.types'
 
 interface FieldRendererProps {
@@ -82,6 +82,9 @@ export function FieldRenderer({
           error={error}
         />
       )
+
+    case 'Label':
+      return <Label label={label} value={value} />
 
     default:
       return (

@@ -1,24 +1,85 @@
 {
-  "PENDIENTE": {
-    "$allContainers": {
-      "enabled": true
-    },
-    "$allFields": {
-      "enabled": true
+  "NUEVO": {
+    "fields": {
+      "fechaHoraIngreso": { "enabled": false },
+      "fechaHoraSalida": { "enabled": false },
+      "pesoSalidaKg": { "enabled": false },
+      "pesoNetoKg": { "enabled": false },
+      "pesoPackingListCartaPorteKg": { "enabled": false },
+      "diferenciaKg": { "enabled": false },
+      "diferenciaPct": { "enabled": false },
+      "volumenTransito": { "enabled": false }
     }
   },
-  "EGRESADA": {
-    "$allContainers": {
-      "enabled": false
-    },
-    "$allFields": {
-      "enabled": false,
-      "required": false
-    },
+  "ANUNCIADO": {
     "fields": {
-      "observaciones": {
-        "enabled": true
-      }
+      "fechaHoraIngreso": { "enabled": false },
+      "fechaHoraSalida": { "enabled": false },
+      "pesoSalidaKg": { "enabled": false },
+      "pesoNetoKg": { "enabled": false },
+      "pesoPackingListCartaPorteKg": { "enabled": false },
+      "diferenciaKg": { "enabled": false },
+      "diferenciaPct": { "enabled": false },
+      "volumenTransito": { "enabled": false }
+    }
+  },
+  "INGRESADO": {
+    "fields": {
+      "fechaHoraSalida": { "enabled": false },
+      "pesoSalidaKg": { "enabled": false },
+      "pesoNetoKg": { "enabled": false },
+      "pesoPackingListCartaPorteKg": { "enabled": false },
+      "diferenciaKg": { "enabled": false },
+      "diferenciaPct": { "enabled": false }
+    }
+  },
+  "EGRESADO": {
+    "fields": {
+      "fechaHoraIngreso": { "enabled": false }
+    }
+  },
+  "CERRADO": {
+    "fields": {
+      "nroTicketPesada": { "enabled": false },
+      "planta": { "enabled": false },
+      "estadoTicketPesada": { "enabled": false },
+      "fechaHoraIngreso": { "enabled": false },
+      "fechaHoraSalida": { "enabled": false },
+      "tiempoEsperaResidenciaMin": { "enabled": false },
+      "tipoMovimiento": { "enabled": false },
+      "origen": { "enabled": false },
+      "destino": { "enabled": false },
+      "operacion": { "enabled": false },
+      "tipoCarga": { "enabled": false },
+      "transportistaRazonSocial": { "enabled": false },
+      "transportistaCuit": { "enabled": false },
+      "choferNombreApellido": { "enabled": false },
+      "choferNroLicencia": { "enabled": false },
+      "choferCuil": { "enabled": false },
+      "patenteCamion": { "enabled": false },
+      "cantidadPesadas": { "enabled": false },
+      "patenteAcoplado1": { "enabled": false },
+      "patenteAcoplado2": { "enabled": false },
+      "patenteAcoplado3": { "enabled": false },
+      "nroComprobantesReferencia": { "enabled": false },
+      "pesoEntradaKg": { "enabled": false },
+      "pesoSalidaKg": { "enabled": false },
+      "pesoNetoKg": { "enabled": false },
+      "tipoContenedor": { "enabled": false },
+      "pesoTaraContenedorKg": { "enabled": false },
+      "cantidadPalletsCanastoOtros": { "enabled": false },
+      "pesoPalletsKg": { "enabled": false },
+      "pesoPackingListCartaPorteKg": { "enabled": false },
+      "diferenciaKg": { "enabled": false },
+      "diferenciaPct": { "enabled": false },
+      "volumenTransito": { "enabled": false },
+      "litrosPorPesada": { "enabled": false },
+      "densidad": { "enabled": false },
+      "precintos": { "enabled": false },
+      "observaciones": { "enabled": false },
+      "nroInstrumentoPesada": { "enabled": false },
+      "nroCertificadoHabilitacionInstrumento": { "enabled": false },
+      "fechaVtoCertificado": { "enabled": false }
     }
   }
 }

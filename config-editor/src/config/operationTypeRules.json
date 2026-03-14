@@ -1,37 +1,38 @@
 {
-  "PMI": {
-    "containers": {
-      "datosTransportista": { "visible": true, "enabled": true },
-      "datosCarga": { "visible": true, "enabled": true },
-      "datosCalidad": { "visible": false }
-    },
+  "GASES": {
     "fields": {
-      "cuitTransportista": { "visible": true, "enabled": true, "required": true },
-      "nombreTransportista": { "visible": true, "enabled": true, "required": false },
-      "tipoDocumento": { "visible": true, "enabled": true, "required": false },
-      "pesoBruto": { "visible": true, "enabled": true, "required": true },
-      "observaciones": { "visible": true, "enabled": true, "required": false }
+      "tipoContenedor": { "visible": false },
+      "pesoTaraContenedorKg": { "visible": false },
+      "cantidadPalletsCanastoOtros": { "visible": false },
+      "pesoPalletsKg": { "visible": false },
+      "pesoPackingListCartaPorteKg": { "visible": false }
     }
   },
-  "SIN_TRANSPORTISTA": {
-    "containers": {
-      "datosTransportista": { "visible": false },
-      "datosCarga": { "visible": true, "enabled": true },
-      "datosCalidad": { "visible": false }
-    },
+  "VINOGRANEL": {
     "fields": {
-      "pesoBruto": { "visible": true, "enabled": true, "required": true },
-      "observaciones": { "visible": true, "enabled": true, "required": false }
+      "tipoContenedor": { "visible": false },
+      "pesoTaraContenedorKg": { "visible": false },
+      "cantidadPalletsCanastoOtros": { "visible": false },
+      "pesoPalletsKg": { "visible": false },
+      "pesoPackingListCartaPorteKg": { "visible": false }
     }
   },
-  "UVA": {
-    "containers": {
-      "datosTransportista": { "visible": false },
-      "datosCarga": { "visible": false },
-      "datosCalidad": { "visible": true, "enabled": true }
-    },
+  "SCRAP": {
     "fields": {
-      "brix": { "visible": true, "enabled": true, "required": true }
+      "tipoContenedor": { "visible": false },
+      "pesoTaraContenedorKg": { "visible": false },
+      "cantidadPalletsCanastoOtros": { "visible": false },
+      "pesoPalletsKg": { "visible": false },
+      "pesoPackingListCartaPorteKg": { "visible": false }
+    }
+  },
+  "SERVICIOS": {
+    "fields": {
+      "tipoContenedor": { "visible": false },
+      "pesoTaraContenedorKg": { "visible": false },
+      "cantidadPalletsCanastoOtros": { "visible": false },
+      "pesoPalletsKg": { "visible": false },
+      "pesoPackingListCartaPorteKg": { "visible": false }
     }
   }
 }
